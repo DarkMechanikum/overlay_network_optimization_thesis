@@ -1,0 +1,26 @@
+{
+  "flow_count": 2,
+  "flows": [
+    {
+      "dst_port": 30000,
+      "flow_id": "flow-0",
+      "flow_index": 0,
+      "packet_size": 128,
+      "receiver_role": "host2",
+      "sender_role": "host1",
+      "src_port": 20000,
+      "target_pps": 50
+    },
+    {
+      "dst_port": 30001,
+      "flow_id": "flow-1",
+      "flow_index": 1,
+      "packet_size": 128,
+      "receiver_role": "host2",
+      "sender_role": "host1",
+      "src_port": 20001,
+      "target_pps": 51
+    }
+  ],
+  "schema_version": 1
+}

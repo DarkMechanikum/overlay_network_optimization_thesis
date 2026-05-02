@@ -1,0 +1,129 @@
+{
+  "cpu_summaries": {
+    "host1": {
+      "avg_utilization_percent": 19.5,
+      "bottom_core_utilization_percent": 17.0,
+      "core_count": 2,
+      "core_util_cv": 0.12885426955194396,
+      "host_role": "host1",
+      "run_id": "20260430T181309Z",
+      "sample_count": 10,
+      "source": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/cpu-sender.txt",
+      "status": "ok",
+      "top_core_utilization_percent": 22.0,
+      "warnings": []
+    },
+    "host2": {
+      "avg_utilization_percent": 15.0,
+      "bottom_core_utilization_percent": 14.0,
+      "core_count": 2,
+      "core_util_cv": 0.06726836888601595,
+      "host_role": "host2",
+      "run_id": "20260430T181309Z",
+      "sample_count": 10,
+      "source": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/cpu-receiver.txt",
+      "status": "ok",
+      "top_core_utilization_percent": 16.0,
+      "warnings": []
+    }
+  },
+  "errors": [],
+  "flow_metrics": [
+    {
+      "bps": 51200.0,
+      "dst_port": 30000,
+      "error": null,
+      "flow_id": "flow-0",
+      "latency_p50": 1100.0,
+      "latency_p99": 1200.0,
+      "latency_p999": 1200.0,
+      "pps": 50.0,
+      "receiver_role": "host2",
+      "run_id": "20260430T181309Z",
+      "sender_role": "host1",
+      "source": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/flow-status-raw.json",
+      "src_port": 20000,
+      "status": "ok",
+      "target_pps": 50
+    },
+    {
+      "bps": 52224.0,
+      "dst_port": 30001,
+      "error": null,
+      "flow_id": "flow-1",
+      "latency_p50": 1101.0,
+      "latency_p99": 1201.0,
+      "latency_p999": 1201.0,
+      "pps": 51.0,
+      "receiver_role": "host2",
+      "run_id": "20260430T181309Z",
+      "sender_role": "host1",
+      "source": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/flow-status-raw.json",
+      "src_port": 20001,
+      "status": "ok",
+      "target_pps": 51
+    }
+  ],
+  "merged_rows": [
+    {
+      "bps": 51200.0,
+      "dst_port": 30000,
+      "error": null,
+      "flow_id": "flow-0",
+      "latency_p50": 1100.0,
+      "latency_p99": 1200.0,
+      "latency_p999": 1200.0,
+      "pps": 50.0,
+      "receiver_cpu_avg": 15.0,
+      "receiver_cpu_bottom_core_utilization": 14.0,
+      "receiver_cpu_core_cv": 0.06726836888601595,
+      "receiver_cpu_top_core_utilization": 16.0,
+      "receiver_role": "host2",
+      "run_id": "20260430T181309Z",
+      "sender_cpu_avg": 19.5,
+      "sender_cpu_bottom_core_utilization": 17.0,
+      "sender_cpu_core_cv": 0.12885426955194396,
+      "sender_cpu_top_core_utilization": 22.0,
+      "sender_role": "host1",
+      "source_refs": [
+        "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/flow-status-raw.json",
+        "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/cpu-sender.txt",
+        "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/cpu-receiver.txt"
+      ],
+      "src_port": 20000,
+      "status": "ok",
+      "target_pps": 50
+    },
+    {
+      "bps": 52224.0,
+      "dst_port": 30001,
+      "error": null,
+      "flow_id": "flow-1",
+      "latency_p50": 1101.0,
+      "latency_p99": 1201.0,
+      "latency_p999": 1201.0,
+      "pps": 51.0,
+      "receiver_cpu_avg": 15.0,
+      "receiver_cpu_bottom_core_utilization": 14.0,
+      "receiver_cpu_core_cv": 0.06726836888601595,
+      "receiver_cpu_top_core_utilization": 16.0,
+      "receiver_role": "host2",
+      "run_id": "20260430T181309Z",
+      "sender_cpu_avg": 19.5,
+      "sender_cpu_bottom_core_utilization": 17.0,
+      "sender_cpu_core_cv": 0.12885426955194396,
+      "sender_cpu_top_core_utilization": 22.0,
+      "sender_role": "host1",
+      "source_refs": [
+        "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/flow-status-raw.json",
+        "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/cpu-sender.txt",
+        "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T181309Z/local/cpu-receiver.txt"
+      ],
+      "src_port": 20001,
+      "status": "ok",
+      "target_pps": 51
+    }
+  ],
+  "run_id": "20260430T181309Z",
+  "warnings": []
+}

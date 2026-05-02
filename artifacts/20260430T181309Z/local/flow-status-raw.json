@@ -1,0 +1,17 @@
+{
+  "attempts": [
+    {
+      "command": "docker exec bench-20260430T181309Z-host1-sender sh -lc \"if [ -f /opt/bench/status.py ]; then python3 /opt/bench/status.py --profile /tmp/bench-run/20260430T181309Z/flow-profile.json; else python3 -c 'print(2)'; fi\"",
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "2"
+    }
+  ],
+  "established_count": 2,
+  "established_flow_ids": [
+    "flow-0",
+    "flow-1"
+  ],
+  "requested_count": 2
+}

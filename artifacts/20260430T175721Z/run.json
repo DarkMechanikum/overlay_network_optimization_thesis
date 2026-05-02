@@ -1,0 +1,41 @@
+{
+  "artifact_paths": {
+    "artifact_result_csv": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T175721Z/result.csv",
+    "benchmark_flow_profile": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T175721Z/local/flow-profile.json",
+    "local": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T175721Z/local",
+    "metrics_normalized": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T175721Z/local/normalized-metrics.json",
+    "result_csv": "/home/vlad/overlay_network_optimization_thesis/results/result.csv",
+    "run_root": "/home/vlad/overlay_network_optimization_thesis/artifacts/20260430T175721Z"
+  },
+  "hosts": {
+    "host1": {
+      "ip": "192.168.40.136",
+      "role": "host1",
+      "ssh_hostname": "server1"
+    },
+    "host2": {
+      "ip": "192.168.40.176",
+      "role": "host2",
+      "ssh_hostname": "server2"
+    }
+  },
+  "params": {
+    "base_pps": 100000,
+    "connections": 10000,
+    "cooldown_seconds": 1,
+    "duration_seconds": 150,
+    "packet_size": 128,
+    "warmup_seconds": 2
+  },
+  "repo_root": "/home/vlad/overlay_network_optimization_thesis",
+  "result_csv_path": "/home/vlad/overlay_network_optimization_thesis/results/result.csv",
+  "run_id": "20260430T175721Z",
+  "stages": [
+    "preflight",
+    "cleanup",
+    "deploy",
+    "benchmark",
+    "metrics",
+    "results"
+  ]
+}
