@@ -1,0 +1,899 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0020
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.21.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.21.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0021
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.22.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.22.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0022
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.23.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.23.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0023
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.24.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.24.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0024
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.25.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.25.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0025
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.26.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.26.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0026
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.27.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.27.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0027
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.28.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.28.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0028
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.29.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.29.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0029
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.30.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.30.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0030
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.31.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.31.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0031
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.32.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.32.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0032
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.33.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.33.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0033
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.34.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.34.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0034
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.35.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.35.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0035
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.36.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.36.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0036
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.37.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.37.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0037
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.38.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.38.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0038
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.39.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.39.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: overlay-stress-0039
+  namespace: default
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: [netperf-server, netperf-client]
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.40.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - from:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+    ports:
+    - protocol: TCP
+      port: 12865
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.40.1.0/24
+    ports:
+    - protocol: TCP
+      port: 59999
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-client
+  - to:
+    - podSelector:
+        matchLabels:
+          app: netperf-server
+    ports:
+    - protocol: TCP
+      port: 12865

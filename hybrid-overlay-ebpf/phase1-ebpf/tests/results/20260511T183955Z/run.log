@@ -1,0 +1,29 @@
+[18:39:55] Starting Phase 1 real-setup tests run_id=20260511T183955Z
+[18:39:55] Ensuring netserver is running on server1:netperf-server
+[18:39:59] Syncing phase1-ebpf to server2:/root/phase1-ebpf
+[18:40:01] Test 0: environment sanity
+[18:40:10] PASS: Test 0 baseline netperf connectivity
+[18:40:10] Test 1: find client veth
+[18:40:11] Client attach target on server2: netns=/var/run/docker/netns/1-xvll9g3ptc iface=veth1
+[18:40:11] PASS: Test 1 resolved client veth veth1
+[18:40:11] Test 2: attach and detach
+[18:40:15] PASS: Test 2 attach shows bpf filter
+[18:40:15] PASS: Test 2 detach removes bpf filter
+[18:40:15] Test 3: passive idle counters
+[18:40:25] PASS: Test 3 ping works with eBPF attached
+[18:40:25] Test 4: TCP_RR flow detection
+[18:40:41] PASS: Test 4 observed TCP_RR flow with packets=403
+[18:40:41] Test 5: TCP_CRR cold-flow detection
+[18:41:00] PASS: Test 5 observed many TCP_CRR flows (200)
+[18:41:00] Test 6: hot vs cold comparison
+[18:41:11] PASS: Test 6 top flow packets=301 across 20 flows
+[18:41:11] Test 7: sampling correctness
+[18:41:11] Building client eBPF object sample_divisor=1 flow_stats_max_entries=65536
+[18:41:31] Building client eBPF object sample_divisor=8 flow_stats_max_entries=65536
+[18:41:53] PASS: Test 7 sampling estimate within 20 percent (delta=11%)
+[18:41:53] Building client eBPF object sample_divisor=1 flow_stats_max_entries=65536
+[18:41:54] Test 8: LRU capacity behavior
+[18:41:54] Building client eBPF object sample_divisor=1 flow_stats_max_entries=128
+[18:42:01] PASS: Test 8 flow map bounded to 39 entries (flow_new=10433)
+[18:42:01] Building client eBPF object sample_divisor=1 flow_stats_max_entries=65536
+[18:42:02] Test 9: manual hot_flows lookup

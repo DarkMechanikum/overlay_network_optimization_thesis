@@ -1,0 +1,93 @@
+# vSwitch / overlay ping test — 2026-05-18
+# Hosts: server1 (37.27.135.239), server2 (195.201.193.69)
+
+## 1. ping -c 3 10.0.2.3 from server1
+```
+PING 10.0.2.3 (10.0.2.3) 56(84) bytes of data.
+From 37.27.135.239 icmp_seq=1 Destination Host Unreachable
+From 37.27.135.239 icmp_seq=2 Destination Host Unreachable
+From 37.27.135.239 icmp_seq=3 Destination Host Unreachable
+
+--- 10.0.2.3 ping statistics ---
+3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 2047ms
+pipe 3
+```
+Exit code: 1
+
+## 2. ping -c 3 10.0.2.2 from server2
+```
+PING 10.0.2.2 (10.0.2.2) 56(84) bytes of data.
+From 195.201.193.69 icmp_seq=1 Destination Host Unreachable
+From 195.201.193.69 icmp_seq=2 Destination Host Unreachable
+From 195.201.193.69 icmp_seq=3 Destination Host Unreachable
+
+--- 10.0.2.2 ping statistics ---
+3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 2057ms
+pipe 3
+```
+Exit code: 1
+
+## 3. server1: docker ps -a | grep netperf; docker inspect IP
+```
+8158a8141bd7   cilium/netperf   "sleep infinity"   13 minutes ago   Up 13 minutes   12865/tcp   netperf-server
+10.0.1.2
+```
+Network: bench-net (not bench-ipvlan). Container IP 10.0.1.2/24.
+
+## 4. docker exec netperf-client ping 10.0.3.2 (bench-ipvlan)
+SKIPPED: No containers on bench-ipvlan on either host.
+- server1 netperf-server → bench-net 10.0.1.2
+- server2 netperf-client → bench-net 10.0.1.4
+- server2: docker ps -a --filter network=bench-ipvlan → empty
+- bench-ipvlan network exists on server2 only (driver ipvlan, local)
+
+## 5. server1: ip route get
+```
+10.0.3.3 via 10.99.0.2 dev gre-oncache src 10.99.0.1 uid 0 
+    cache 
+---
+10.0.2.3 via 195.201.193.69 dev enp4s0 src 37.27.135.239 uid 0 
+    cache 
+```
+
+## 6. server1: enp8s0 (Hetzner cloud network)
+Before/after ip link set enp8s0 up (already UP; NO-CARRIER):
+```
+2: enp8s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
+    link/ether 7c:10:c9:9c:14:08 brd ff:ff:ff:ff:ff:ff
+```
+No cable/cloud attach — bringing interface up does not change carrier.
+
+## Manual route add (10.0.3.3/32 via peer 10.0.2.x)
+NOT APPLIED: Host-to-host ping 10.0.2.2 ↔ 10.0.2.3 failed (100% loss).
+Per instructions, symmetric ip route replace was not attempted.
+
+## Additional context
+
+### Loopback aliases (vswitch logical IPs are local, not on L2)
+server1 lo: 10.0.2.2/32, 10.0.3.2/32
+server2 lo: 10.0.2.3/32, 10.0.3.3/32
+
+### Physical / routing
+server1 enp4s0: 37.27.135.239/32 UP
+server2 enp1s0: 195.201.193.69/32 UP (no enp4s0 on server2)
+
+server1 routes (10.0.* excerpt):
+10.0.2.3 via 195.201.193.69 dev enp4s0 src 37.27.135.239 onlink 
+10.0.3.3 via 10.99.0.2 dev gre-oncache 
+
+server2 routes (10.0.* excerpt):
+10.0.2.2 via 37.27.135.239 dev enp1s0 src 195.201.193.69 onlink 
+10.0.3.2 via 10.99.0.1 dev gre-oncache 
+
+Public gateway ping server1 → 195.201.193.69: OK (~25 ms). Neighbor on enp4s0 for 195.201.193.69 showed FAILED while ping succeeded.
+
+### bench-net overlay (sanity)
+From server2: docker exec netperf-client ping -c 3 10.0.1.2 → 0% loss, ~25 ms RTT.
+
+## Summary / findings
+1. Direct ICMP between logical vSwitch addresses 10.0.2.2 and 10.0.2.3 does not work; both sides report Destination Host Unreachable from their public primary addresses.
+2. 10.0.2.x and 10.0.3.x are configured on loopback on each machine; forwarding to the peer uses onlink routes via the other host's public /32 on enp4s0/enp1s0, which does not deliver ICMP to the peer's loopback aliases.
+3. GRE oncache path (10.99.0.x) is how 10.0.3.2/10.0.3.3 are reached remotely (route get shows gre-oncache).
+4. netperf workloads use bench-net (10.0.1.x), not bench-ipvlan; no 10.0.3.2 container ping test was run.
+5. enp8s0 on server1 has NO-CARRIER; not a fix for current ping failure without Hetzner private network attachment.

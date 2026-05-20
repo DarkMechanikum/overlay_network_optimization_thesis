@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netperf-server
+  labels:
+    app: netperf-server
+spec:
+  restartPolicy: Never
+  nodeName: node1
+  containers:
+    - name: netperf
+      image: cilium/netperf
+      imagePullPolicy: IfNotPresent
+      command: ["sleep"]
+      args: ["infinity"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netperf-client
+  labels:
+    app: netperf-client
+spec:
+  restartPolicy: Never
+  nodeName: node2
+  containers:
+    - name: netperf
+      image: cilium/netperf
+      imagePullPolicy: IfNotPresent
+      command: ["sleep"]
+      args: ["infinity"]

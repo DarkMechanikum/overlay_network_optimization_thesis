@@ -1,0 +1,189 @@
+=== GRE/oncache discovery 20260518T130311Z ===
+
+########## server1 ##########
+--- ip -d link (gre) ---
+43: gre-oncache@NONE: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1476 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/gre 37.27.135.239 peer 195.201.193.69 promiscuity 0 minmtu 68 maxmtu 65511 
+    gre remote 195.201.193.69 local 37.27.135.239 ttl 255 addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 
+--- ip addr gre-oncache ---
+43: gre-oncache@NONE: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1476 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/gre 37.27.135.239 peer 195.201.193.69
+    inet 10.99.0.1/30 scope global gre-oncache
+       valid_lft forever preferred_lft forever
+    inet6 fe80::200:5efe:251b:87ef/64 scope link 
+       valid_lft forever preferred_lft forever
+--- routes 10.99|gre|oncache ---
+10.0.3.3 via 10.99.0.2 dev gre-oncache 
+10.99.0.0/30 dev gre-oncache proto kernel scope link src 10.99.0.1 
+--- iptables nat (head) ---
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+KUBE-SERVICES  all  --  0.0.0.0/0            0.0.0.0/0            /* kubernetes service portals */
+DOCKER     all  --  0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+KUBE-SERVICES  all  --  0.0.0.0/0            0.0.0.0/0            /* kubernetes service portals */
+DOCKER     all  --  0.0.0.0/0           !127.0.0.0/8          ADDRTYPE match dst-type LOCAL
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+SNAT       all  --  10.0.3.2             10.0.3.3             to:10.99.0.1
+ANTREA-POSTROUTING  all  --  0.0.0.0/0            0.0.0.0/0            /* Antrea: jump to Antrea postrouting rules */
+
+Chain ANTREA-POSTROUTING (1 references)
+target     prot opt source               destination         
+MASQUERADE  all  --  10.10.0.0/24         0.0.0.0/0            /* Antrea: masquerade Pod to external packets */ ! match-set ANTREA-POD-IP dst
+MASQUERADE  all  --  0.0.0.0/0            0.0.0.0/0            /* Antrea: masquerade LOCAL traffic */ ADDRTYPE match src-type !LOCAL limit-out ADDRTYPE match src-type LOCAL random-fully
+
+Chain DOCKER (2 references)
+target     prot opt source               destination         
+
+Chain KUBE-KUBELET-CANARY (0 references)
+target     prot opt source               destination         
+
+Chain KUBE-MARK-MASQ (13 references)
+--- network config dirs ---
+/etc/network/:
+if-pre-up.d
+if-up.d
+interfaces
+
+/etc/systemd/network/:
+--- grep gre-oncache in /etc ---
+--- all 10.99 addresses ---
+    inet 10.99.0.1/30 scope global gre-oncache
+
+########## server2 ##########
+--- ip -d link (gre) ---
+41: gre-oncache@NONE: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1476 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/gre 195.201.193.69 peer 37.27.135.239 promiscuity 0 minmtu 68 maxmtu 65511 
+    gre remote 37.27.135.239 local 195.201.193.69 ttl 255 addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 
+--- ip addr gre-oncache ---
+41: gre-oncache@NONE: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1476 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/gre 195.201.193.69 peer 37.27.135.239
+    inet 10.99.0.2/30 scope global gre-oncache
+       valid_lft forever preferred_lft forever
+    inet6 fe80::200:5efe:c3c9:c145/64 scope link 
+       valid_lft forever preferred_lft forever
+--- routes 10.99|gre|oncache ---
+10.0.3.2 via 10.99.0.1 dev gre-oncache 
+10.99.0.0/30 dev gre-oncache proto kernel scope link src 10.99.0.2 
+--- iptables nat (head) ---
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+KUBE-SERVICES  all  --  0.0.0.0/0            0.0.0.0/0            /* kubernetes service portals */
+DOCKER     all  --  0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+KUBE-SERVICES  all  --  0.0.0.0/0            0.0.0.0/0            /* kubernetes service portals */
+DOCKER     all  --  0.0.0.0/0           !127.0.0.0/8          ADDRTYPE match dst-type LOCAL
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+MASQUERADE  all  --  172.18.0.0/16        0.0.0.0/0           
+SNAT       all  --  10.0.2.3             0.0.0.0/0            to:195.201.193.69
+ANTREA-POSTROUTING  all  --  0.0.0.0/0            0.0.0.0/0            /* Antrea: jump to Antrea postrouting rules */
+SNAT       all  --  10.0.3.3             10.0.3.2             to:10.99.0.2
+SNAT       all  --  10.0.3.3             10.0.3.2             to:10.99.0.2
+
+Chain ANTREA-POSTROUTING (1 references)
+target     prot opt source               destination         
+MASQUERADE  all  --  10.10.1.0/24         0.0.0.0/0            /* Antrea: masquerade Pod to external packets */ ! match-set ANTREA-POD-IP dst
+MASQUERADE  all  --  0.0.0.0/0            0.0.0.0/0            /* Antrea: masquerade LOCAL traffic */ ADDRTYPE match src-type !LOCAL limit-out ADDRTYPE match src-type LOCAL random-fully
+
+Chain DOCKER (2 references)
+target     prot opt source               destination         
+
+Chain KUBE-KUBELET-CANARY (0 references)
+--- network config dirs ---
+/etc/network/:
+if-pre-up.d
+if-up.d
+interfaces
+
+/etc/systemd/network/:
+--- grep gre-oncache in /etc ---
+--- all 10.99 addresses ---
+    inet 10.99.0.2/30 scope global gre-oncache
+
+########## ping 10.99.0.2 from server1 ##########
+PING 10.99.0.2 (10.99.0.2) 56(84) bytes of data.
+64 bytes from 10.99.0.2: icmp_seq=1 ttl=64 time=25.1 ms
+64 bytes from 10.99.0.2: icmp_seq=2 ttl=64 time=25.2 ms
+
+--- 10.99.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 25.113/25.150/25.188/0.037 ms
+
+########## server2 container / 10.0.3.2 reachability ##########
+--- docker ps (names) ---
+netperf-client
+--- netperf-client: ip addr ---
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+46: eth0@if47: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default qlen 1000 link-netnsid 0
+    inet 10.0.1.4/24 brd 10.0.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+48: eth1@if49: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default  link-netnsid 1
+    inet 172.18.0.3/16 brd 172.18.255.255 scope global eth1
+       valid_lft forever preferred_lft forever
+--- netperf-client: routes ---
+default via 172.18.0.1 dev eth1 
+10.0.1.0/24 dev eth0 proto kernel scope link src 10.0.1.4 
+172.18.0.0/16 dev eth1 proto kernel scope link src 172.18.0.3 
+--- netperf-client: ping 10.0.3.2 ---
+PING 10.0.3.2 (10.0.3.2): 56 data bytes
+64 bytes from 10.0.3.2: seq=0 ttl=63 time=25.188 ms
+64 bytes from 10.0.3.2: seq=1 ttl=63 time=25.332 ms
+
+--- 10.0.3.2 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 25.188/25.260/25.332 ms
+--- netperf-client: ping 10.99.0.1 ---
+PING 10.99.0.1 (10.99.0.1): 56 data bytes
+64 bytes from 10.99.0.1: seq=0 ttl=63 time=25.175 ms
+64 bytes from 10.99.0.1: seq=1 ttl=63 time=25.313 ms
+
+--- 10.99.0.1 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 25.175/25.244/25.313 ms
+--- host ping 10.0.3.2 ---
+PING 10.0.3.2 (10.0.3.2) 56(84) bytes of data.
+64 bytes from 10.0.3.2: icmp_seq=1 ttl=64 time=25.1 ms
+64 bytes from 10.0.3.2: icmp_seq=2 ttl=64 time=25.1 ms
+
+--- 10.0.3.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 25.054/25.084/25.114/0.030 ms
+
+========== SUMMARY ==========
+server1 local GRE tunnel endpoint (underlay): 37.27.135.239
+server1 gre-oncache IPv4: 10.99.0.1/30
+server1 GRE peer (remote underlay on tunnel): 195.201.193.69
+
+server2 local GRE tunnel endpoint (underlay): 195.201.193.69
+server2 gre-oncache IPv4: 10.99.0.2/30
+server2 GRE peer (remote underlay on tunnel): 37.27.135.239
+
+Peer GRE IP on server2 (tunnel inner / gre-oncache): 10.99.0.2
+Local GRE IP on server1 (tunnel inner / gre-oncache): 10.99.0.1
+Ping server1 -> 10.99.0.2: SUCCESS (2/2, ~25ms)
+
+GRE between hosts: UP (both ends POINTOPOINT UP)
+Routes: server1 10.0.3.3 via 10.99.0.2 dev gre-oncache; server2 10.0.3.2 via 10.99.0.1 dev gre-oncache
+NAT: server1 SNAT 10.0.3.2->10.0.3.3 to 10.99.0.1; server2 SNAT 10.0.3.3->10.0.3.2 to 10.99.0.2
+/etc: no gre-oncache references found (likely runtime/script created)
+
+Container test (server2 netperf-client, NOT ipvlan yet — eth0 10.0.1.4/24):
+  ping 10.0.3.2: SUCCESS (2/2, ~25ms) — path works via existing routing/NAT
+  ping 10.99.0.1: SUCCESS
+Host server2 ping 10.0.3.2: SUCCESS

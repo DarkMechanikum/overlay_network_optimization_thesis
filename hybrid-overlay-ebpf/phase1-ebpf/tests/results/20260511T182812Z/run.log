@@ -1,0 +1,6 @@
+[18:28:12] Starting Phase 1 real-setup tests run_id=20260511T182812Z
+[18:28:12] Ensuring netserver is running on server1:netperf-server
+[18:28:16] Syncing phase1-ebpf to server2:/root/phase1-ebpf
+[18:28:18] Test 0: environment sanity
+[18:28:27] PASS: Test 0 baseline netperf connectivity
+[18:28:27] Test 1: find client veth
