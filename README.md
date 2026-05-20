@@ -36,7 +36,7 @@ This executes, in order, on the same cluster and pod placement:
 2. `oncache` — upstream ONCache cache fast path
 3. `falcon` — Falcon-style multi-core fallback (RPS/XPS spread across all
    CPUs on the overlay datapath; no ONCache)
-4. `hybrid` — ONCache fast path **plus** the Falcon-style fallback
+4. `hybrid` — Hybrid approach of Falcon and ONCache
 
 For each mode the harness runs both **hot** flows (`TCP_RR`, persistent TCP)
 and **cold** flows (`TCP_CRR`, new TCP per transaction) across several worker
