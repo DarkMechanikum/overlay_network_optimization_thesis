@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/root/phase1-ebpf/user/insert_hot_flow.py", line 73, in <module>
+    raise SystemExit(main())
+  File "/root/phase1-ebpf/user/insert_hot_flow.py", line 55, in main
+    run_bpftool(
+  File "/root/phase1-ebpf/user/insert_hot_flow.py", line 18, in run_bpftool
+    proc = subprocess.run([*bpftool_prefix(), *args], check=True, capture_output=True, text=True)
+  File "/usr/lib/python3.8/subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['nsenter', '--net=/var/run/docker/netns/1-xvll9g3ptc', '/usr/sbin/bpftool', 'map', 'update', 'id', '86', 'key', 'hex', '0a0001040a0001028d58904d06000000', 'value', 'hex', 'e8030000000000000000000000000000', 'any']' returned non-zero exit status 255.

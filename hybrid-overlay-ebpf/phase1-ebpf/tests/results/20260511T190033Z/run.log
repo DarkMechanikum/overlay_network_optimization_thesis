@@ -1,0 +1,34 @@
+[19:00:33] Starting Phase 1 real-setup tests run_id=20260511T190033Z
+[19:00:33] Ensuring netserver is running on server1:netperf-server
+[19:00:37] Syncing phase1-ebpf to server2:/root/phase1-ebpf
+[19:00:39] Test 0: environment sanity
+[19:00:48] PASS: Test 0 baseline netperf connectivity
+[19:00:48] Test 1: find client veth
+[19:00:49] Client attach target on server2: netns=/var/run/docker/netns/1-xvll9g3ptc iface=veth1
+[19:00:49] PASS: Test 1 resolved client veth veth1
+[19:00:49] Test 2: attach and detach
+[19:00:53] PASS: Test 2 attach shows bpf filter
+[19:00:53] PASS: Test 2 detach removes bpf filter
+[19:00:53] Test 3: passive idle counters
+[19:01:04] PASS: Test 3 ping works with eBPF attached
+[19:01:04] Test 4: TCP_RR flow detection
+[19:01:19] PASS: Test 4 observed TCP_RR flow with packets=402
+[19:01:19] Test 5: TCP_CRR cold-flow detection
+[19:01:38] PASS: Test 5 observed many TCP_CRR flows (200)
+[19:01:38] Test 6: hot vs cold comparison
+[19:01:49] PASS: Test 6 top flow packets=300 across 20 flows
+[19:01:49] Test 7: sampling correctness
+[19:01:49] Building client eBPF object sample_divisor=1 flow_stats_max_entries=65536
+[19:02:10] Building client eBPF object sample_divisor=8 flow_stats_max_entries=65536
+[19:02:31] PASS: Test 7 sampling estimate within 20 percent (delta=2%)
+[19:02:31] Building client eBPF object sample_divisor=1 flow_stats_max_entries=65536
+[19:02:32] Test 8: LRU capacity behavior
+[19:02:32] Building client eBPF object sample_divisor=1 flow_stats_max_entries=128
+[19:02:39] PASS: Test 8 flow map bounded to 95 entries (flow_new=8999)
+[19:02:39] Building client eBPF object sample_divisor=1 flow_stats_max_entries=65536
+[19:02:40] Test 9: manual hot_flows lookup
+[19:02:57] PASS: Test 9 hot_flows lookup incremented CNT_HOT_PACKETS
+[19:02:57] PASS: Test 9 fallback counters remained readable
+[19:02:57] Test 10: overhead sanity
+[19:04:03] PASS: Test 10 overhead within 10 percent (0%)
+[19:04:03] Phase 1 test summary: pass=13 fail=0 results=./tests/results/20260511T190033Z

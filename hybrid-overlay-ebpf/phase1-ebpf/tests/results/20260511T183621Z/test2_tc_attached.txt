@@ -1,0 +1,4 @@
+qdisc noqueue 0: root refcnt 2 
+qdisc clsact ffff: parent ffff:fff1 
+filter protocol all pref 49152 bpf chain 0 
+filter protocol all pref 49152 bpf chain 0 handle 0x1 flow_classifier.bpf.o:[tc] direct-action not_in_hw id 325 tag 3c1032de90b27113 jited 

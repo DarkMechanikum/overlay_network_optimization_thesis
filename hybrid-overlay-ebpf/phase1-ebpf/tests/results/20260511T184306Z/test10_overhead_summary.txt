@@ -1,0 +1,1 @@
+baseline_rate=39.04 attached_rate=39.50 overhead_percent=1
