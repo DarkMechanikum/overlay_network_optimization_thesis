@@ -1,1 +1,0 @@
-unsampled_packets=670 sampled_packets=86 estimated_packets=688 delta_percent=2

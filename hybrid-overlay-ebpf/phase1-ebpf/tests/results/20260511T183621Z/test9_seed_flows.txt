@@ -1,1 +1,0 @@
-src_ip        src_port  dst_ip        dst_port  proto packets   sampled       bytes    age_ms  last_seen_ms

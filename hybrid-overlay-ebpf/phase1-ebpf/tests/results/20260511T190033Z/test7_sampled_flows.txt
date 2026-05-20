@@ -1,3 +1,0 @@
-src_ip        src_port  dst_ip        dst_port  proto packets   sampled       bytes    age_ms  last_seen_ms
-10.0.1.4         45242  10.0.1.2         12188  TCP        86        86       11052  1777811334492  1777811319542
-10.0.1.4         58812  10.0.1.2         16690  TCP         2         2         132  1777811319517  1777811319492
