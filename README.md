@@ -76,13 +76,3 @@ BENCHMARK_MODES="baseline hybrid" \
   ./scripts/run_latency_benchmark.sh \
   ./conf/oncache_k8s_setup.conf ./conf/latency_benchmark.conf
 ```
-
-## Layout
-
-| Directory | Purpose |
-|-----------|---------|
-| `oncache-k8s/` | Kubernetes + Antrea harness and the main benchmark runner |
-| `oncache-falcon-hybrid/` | Falcon-style multi-core fallback scripts and the hybrid composition |
-| `oncache-benchmark/` | Standalone Docker mixed-workload harness (ipvlan) |
-| `oncache-docker/` | Legacy single-host Docker baseline |
-| `phase1-ebpf/` | Earlier passive eBPF telemetry prototype |
